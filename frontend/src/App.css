@@ -1,0 +1,140 @@
+.App {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+:root {
+  --size: max(22vmin, 160px);
+}
+
+a {
+  color: #fc6225;
+  font-size: 1rem;
+}
+
+.main-wrapper {
+  max-width: 1280px;
+  text-align: center;
+}
+
+.solar {
+  display: grid;
+  place-items: center;
+  outline: 1px dotted #fff5;
+  outline-offset: calc(var(--size) / 2);
+  border-radius: 50%;
+  width: calc(var(--size));
+  margin: 0 auto 15vh;
+}
+
+.sun {
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  grid-area: 1 / 1 / -1 / -1;
+  background: linear-gradient(#fcd670, #f2784b);
+  border-radius: 50%;
+}
+
+.sun::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: radial-gradient(closest-side, #ff770f11, #ffda7711);
+  border-radius: 50%;
+  z-index: 1;
+  animation: glow 0.8s ease-in-out infinite alternate;
+}
+
+.sun-diameter {
+  position: absolute;
+  top: 50%;
+  font-size: 0.5em;
+  line-height: 3em;
+  width: var(--size);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.sun-diameter::after {
+  position: absolute;
+  content: "";
+  left: 0;
+  border: 2px dotted #fff5;
+  width: 98%;
+  opacity: 0;
+  transition: opacity 0.5s ease; 
+}
+
+.sun:hover .sun-diameter,
+.sun:hover .sun-diameter::after {
+  opacity: 1;
+}
+
+svg {
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+}
+
+.sun:hover svg {
+  animation: spin 2s ease;
+  transform-origin: center center;
+  opacity: 1;
+}
+
+@keyframes spin {
+  from {
+    opacity: 0;
+    transform: rotate(-100deg);
+  }
+}
+
+.earth {
+  grid-area: 1 / 1 / -1 / -1;
+  width: calc(var(--size) / 7);
+  height: calc(var(--size) / 7);
+  background: linear-gradient(#19b5fe, #7befb2);
+  border-radius: 50%;
+  
+  
+  --angle: 0deg;
+  --radius: var(--size);
+  animation: adjust-angle 10s infinite linear;
+  
+  translate: /* Translation on X-axis */
+             calc(cos(var(--angle)) * var(--radius))
+
+             /* Translation on Y-axis */
+             calc(sin(var(--angle)) * var(--radius) * -1)
+  ;      
+}
+
+@property --angle {
+	syntax: '<angle>';
+	initial-value: 0deg;
+	inherits: true;
+}
+
+@keyframes adjust-angle {
+	to {
+		--angle: 360deg;
+	}
+}
+
+@keyframes glow {
+  from {
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

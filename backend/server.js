@@ -3,6 +3,8 @@ const http = require("node:http");
 let mostAccuratePi = 0;
 
 const server = http.createServer((req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  
   if (req.url.startsWith("/pi") && req.method === "GET") {
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify({ pi: mostAccuratePi }));
@@ -51,7 +53,7 @@ function getNthDecimal(number, decimalPrecision) {
   return roundedNumber / factor;
 }
 
-const PORT = 3000;
+const PORT = 8000;
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
   calculatePi();
