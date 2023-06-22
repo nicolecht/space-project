@@ -19,9 +19,13 @@ function App() {
   const calculateCircumference = () => {
     if (piValue !== "") {
       const circumference = piValue * sunDiameterInKM;
-      return circumference.toLocaleString();
+      return formatToKM(circumference)
     }
     return "Calculating...";
+  };
+
+  const formatToKM = (value) => {
+    return value.toLocaleString() + " km";
   };
 
   return (
@@ -29,10 +33,8 @@ function App() {
       <div className="main-wrapper">
         <div className="solar">
           <div className="sun">
-            <div className="sun-diameter">
-              {sunDiameterInKM.toLocaleString()} km
-            </div>
-            <CurvedText text={`${calculateCircumference()} km`} />
+            <div className="sun-diameter">{formatToKM(sunDiameterInKM)}</div>
+            <CurvedText text={`${calculateCircumference()}`} />
           </div>
           <div className="earth"></div>
         </div>
@@ -41,8 +43,8 @@ function App() {
         ) : (
           <>
             <h4>Server's Pi Value: {piValue}</h4>
-            <h4>The Sun's Diameter: {sunDiameterInKM.toLocaleString()} km</h4>
-            <h4>The Sun's Circumference: {calculateCircumference()} km</h4>
+            <h4>The Sun's Diameter: {formatToKM(sunDiameterInKM)}</h4>
+            <h4>The Sun's Circumference: {calculateCircumference()}</h4>
           </>
         )}
         <a
